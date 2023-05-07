@@ -104,7 +104,7 @@ public class Calculator implements ActionListener {
             }
         }
         if (e.getSource() == decButton) {
-            if (!textfield.getText().contains("."))
+            if (!textfield.getText().contains(".") && textfield.getText().length() != 0)
                 textfield.setText(textfield.getText().concat("."));
         }
 
@@ -131,18 +131,10 @@ public class Calculator implements ActionListener {
         if (e.getSource() == equButton) {
             num2 = Double.parseDouble(textfield.getText());
             switch (operator) {
-                case '+':
-                    result = num1 + num2;
-                    break;
-                case '-':
-                    result = num1 - num2;
-                    break;
-                case '*':
-                    result = num1 * num2;
-                    break;
-                case '/':
-                    result = num1 / num2;
-                    break;
+                case '+' -> result = num1 + num2;
+                case '-' -> result = num1 - num2;
+                case '*' -> result = num1 * num2;
+                case '/' -> result = num1 / num2;
             }
             textfield.setText(String.valueOf(result));
             num1=result;

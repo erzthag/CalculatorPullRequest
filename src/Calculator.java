@@ -2,16 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Calculator implements ActionListener {
+public class Calculator implements ActionListener, KeyListener {
     JFrame frame;
     JTextField textfield;
     JButton[] numberButtons = new JButton[10];
-    JButton[] functionButtons = new JButton[10];
-    JButton addButton, subButton, mulButton, divButton, sqrtButton;
-    JButton decButton, equButton, delButton, clrButton, negButton;
+    JButton[] functionButtons = new JButton[13];
+    JButton addButton, subButton, mulButton, divButton, sqrtButton, powButton;
+    JButton decButton, equButton, delButton, clrButton, negButton, prctButton, squareButton;
     JPanel panel;
 
-    Font myFont = new Font("Ink Free", Font.BOLD, 15);
+    Font myFont = new Font("Times New Roman", Font.BOLD, 20);
 
     double num1 = 0, num2 = 0, result = 0;
     char operator;
@@ -19,12 +19,16 @@ public class Calculator implements ActionListener {
     Calculator() {
         frame = new JFrame("Calcularor");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(420, 550);
+        frame.setSize(445, 600);
         frame.setLayout(null);
         textfield = new JTextField();
-        textfield.setBounds(50, 25, 300, 50);
+        textfield.setBounds(30, 25, 365, 100);
         textfield.setFont(myFont);
         textfield.setEditable(false);
+        frame.setFocusable(true);
+        frame.requestFocusInWindow();
+        frame.addKeyListener(this);
+
 
 
         addButton = new JButton("+");
@@ -33,11 +37,14 @@ public class Calculator implements ActionListener {
         divButton = new JButton("/");
         decButton = new JButton(".");
         equButton = new JButton("=");
-        delButton = new JButton("Delete");
-        clrButton = new JButton("Clear");
-        negButton = new JButton("(-)");
-        sqrtButton = new JButton("sqrt");
+        delButton = new JButton("<-");
+        clrButton = new JButton("Clr");
+        negButton = new JButton("+/-");
+        sqrtButton = new JButton("√");
         //changes
+        prctButton = new JButton("%");
+        squareButton = new JButton("x²");
+        powButton = new JButton("pow");
 
         functionButtons[0] = addButton;
         functionButtons[1] = subButton;
@@ -49,6 +56,9 @@ public class Calculator implements ActionListener {
         functionButtons[7] = clrButton;
         functionButtons[8] = negButton;
         functionButtons[9] = sqrtButton;
+        functionButtons[10] = prctButton;
+        functionButtons[11] = squareButton;
+        functionButtons[12] = powButton;
 
         for (int i = 0; i < 10; i++) {
             functionButtons[i].addActionListener(this);
@@ -61,36 +71,48 @@ public class Calculator implements ActionListener {
             numberButtons[i].setFont(myFont);
             numberButtons[i].setFocusable(false);
         }
-        negButton.setBounds(50, 430, 70, 50);
-        delButton.setBounds(125, 430, 70, 50);
-        clrButton.setBounds(200, 430, 70, 50);
-        sqrtButton.setBounds(280,430, 70, 50);
+//        negButton.setBounds(50, 430, 70, 50);
+
+        prctButton.setBounds(30, 150, 60, 67);
+        delButton.setBounds(30, 460, 67, 67);
+        clrButton.setBounds(100, 460, 67, 67);
+        sqrtButton.setBounds(30,381, 60, 67);
+        squareButton.setBounds(30, 227, 60, 67);
+        powButton.setBounds(30, 304, 60, 67);
+        equButton.setBounds(177, 460, 220, 67);
+        equButton.setFont(new Font("Ink Free", Font.BOLD, 30));
 
         panel = new JPanel();
-        panel.setBounds(50, 100, 300, 300);
+        panel.setBounds(100, 150, 300, 300);
         panel.setLayout(new GridLayout(4, 4, 10, 10));
         //panel.setBackground(Color.PINK);
-        panel.add(numberButtons[1]);
-        panel.add(numberButtons[2]);
-        panel.add(numberButtons[3]);
+        panel.add(numberButtons[7]);
+        panel.add(numberButtons[8]);
+        panel.add(numberButtons[9]);
         panel.add(addButton);
+
         panel.add(numberButtons[4]);
         panel.add(numberButtons[5]);
         panel.add(numberButtons[6]);
         panel.add(subButton);
-        panel.add(numberButtons[7]);
-        panel.add(numberButtons[8]);
-        panel.add(numberButtons[9]);
-        panel.add(mulButton);
-        panel.add(decButton);
-        panel.add(numberButtons[0]);
 
-        panel.add(equButton);
+        panel.add(numberButtons[1]);
+        panel.add(numberButtons[2]);
+        panel.add(numberButtons[3]);
+        panel.add(mulButton);
+
+        panel.add(negButton);
+        panel.add(numberButtons[0]);
+        panel.add(decButton);
         panel.add(divButton);
 
         frame.add(panel);
+
+        frame.add(powButton);
+        frame.add(squareButton);
+        frame.add(prctButton);
         frame.add(sqrtButton);
-        frame.add(negButton);
+        frame.add(equButton);
         frame.add(delButton);
         frame.add(clrButton);
         frame.add(textfield);
@@ -163,5 +185,54 @@ public class Calculator implements ActionListener {
             temp*=-1;
             textfield.setText(String.valueOf(temp));
         }
+        if (e.getSource() == prctButton) {
+            num2 = Double.parseDouble(textfield.getText());
+            if (e.getSource() == prctButton) {
+                switch (operator) {
+                    case '+' -> result = num1 + num2 * num1 / 100;
+                    case '-' -> result = num1 - num2 * num1 / 100;
+                    case '*' -> result = num1 * num2 * num1 / 100;
+                    case '/' -> result = num1 / num2 * num1 / 100;
+                }
+            }
+            textfield.setText(String.valueOf(result));
+            num1 = result;
+        }
+        if (e.getSource() == powButton) {
+            num1 = Double.parseDouble(textfield.getText());
+            textfield.setText("");
+            result = Math.pow(num1, num2);
+
+            if (e.getSource() == powButton) {
+                result = Math.pow(num1, num2);
+            }
+            textfield.setText(String.valueOf(result));
+            num1 = result;
+
+        }
+        if (e.getSource() == squareButton) {
+            num1 = Double.parseDouble(textfield.getText());
+            num1 *= num1;
+            textfield.setText(String.valueOf(num1));
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        char symbol = e.getKeyChar();
+        if (!Character.isDigit(symbol)) {
+            return;
+        }
+        textfield.setText(textfield.getText() + symbol);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

@@ -205,7 +205,7 @@ public class Calculator implements ActionListener, KeyListener {
                 textfield.setText(String.valueOf(num1));
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.print("");
         }
     }
 

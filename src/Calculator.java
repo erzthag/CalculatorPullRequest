@@ -29,8 +29,6 @@ public class Calculator implements ActionListener, KeyListener {
         frame.requestFocusInWindow();
         frame.addKeyListener(this);
 
-
-
         addButton = new JButton("+");
         subButton = new JButton("-");
         mulButton = new JButton("*");
@@ -60,7 +58,7 @@ public class Calculator implements ActionListener, KeyListener {
         functionButtons[11] = squareButton;
         functionButtons[12] = powButton;
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 13; i++) {
             functionButtons[i].addActionListener(this);
             functionButtons[i].setFont(myFont);
             functionButtons[i].setFocusable(false);
@@ -76,7 +74,7 @@ public class Calculator implements ActionListener, KeyListener {
         prctButton.setBounds(30, 150, 60, 67);
         delButton.setBounds(30, 460, 67, 67);
         clrButton.setBounds(100, 460, 67, 67);
-        sqrtButton.setBounds(30,381, 60, 67);
+        sqrtButton.setBounds(30, 381, 60, 67);
         squareButton.setBounds(30, 227, 60, 67);
         powButton.setBounds(30, 304, 60, 67);
         equButton.setBounds(177, 460, 220, 67);
@@ -117,109 +115,102 @@ public class Calculator implements ActionListener, KeyListener {
         frame.add(clrButton);
         frame.add(textfield);
         frame.setVisible(true);
-
     }
-
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (int i = 0; i < 10; i++) {
-            if (e.getSource() == numberButtons[i]) {
-                textfield.setText(textfield.getText().concat(String.valueOf(i)));
-            }
-        }
-        if (e.getSource() == decButton) {
-            if (!textfield.getText().contains(".") && textfield.getText().length() != 0)
-                textfield.setText(textfield.getText().concat("."));
-        }
-
-        if (e.getSource() == addButton) {
-            num1 = Double.parseDouble(textfield.getText());
-            operator = '+';
-            textfield.setText("");
-        }
-        if (e.getSource() == subButton) {
-            num1 = Double.parseDouble(textfield.getText());
-            operator = '-';
-            textfield.setText("");
-        }
-        if (e.getSource() == sqrtButton) {
-            num1 = Double.parseDouble(textfield.getText());
-            num1 = Math.sqrt(num1);
-            textfield.setText(String.valueOf(num1));
-        }
-        if (e.getSource() == mulButton) {
-            num1 = Double.parseDouble(textfield.getText());
-            operator = '*';
-            textfield.setText("");
-        }
-        if (e.getSource() == divButton) {
-            num1 = Double.parseDouble(textfield.getText());
-            operator = '/';
-            textfield.setText("");
-        }
-        if (e.getSource() == equButton) {
-            num2 = Double.parseDouble(textfield.getText());
-            switch (operator) {
-                case '+' -> result = num1 + num2;
-                case '-' -> result = num1 - num2;
-                case '*' -> result = num1 * num2;
-                case '/' -> result = num1 / num2;
-            }
-            textfield.setText(String.valueOf(result));
-            num1=result;
-        }
-        if (e.getSource() == clrButton) {
-            textfield.setText("");
-        }
-        if (e.getSource() == delButton) {
-            String string = textfield.getText();
-            textfield.setText("");
-            for (int i=0; i<string.length()-1; i++){
-                textfield.setText(textfield.getText() + string.charAt(i));
-            }
-        }
-        if (e.getSource() == negButton) {
-            double temp = Double.parseDouble(textfield.getText());
-            temp*=-1;
-            textfield.setText(String.valueOf(temp));
-        }
-        if (e.getSource() == prctButton) {
-            num2 = Double.parseDouble(textfield.getText());
-            if (e.getSource() == prctButton) {
-                switch (operator) {
-                    case '+' -> result = num1 + num2 * num1 / 100;
-                    case '-' -> result = num1 - num2 * num1 / 100;
-                    case '*' -> result = num1 * num2 * num1 / 100;
-                    case '/' -> result = num1 / num2 * num1 / 100;
+        try {
+            for (int i = 0; i < 10; i++) {
+                if (e.getSource() == numberButtons[i]) {
+                    textfield.setText(textfield.getText().concat(String.valueOf(i)));
                 }
             }
-            textfield.setText(String.valueOf(result));
-            num1 = result;
-        }
-        if (e.getSource() == powButton) {
-            num1 = Double.parseDouble(textfield.getText());
-            textfield.setText("");
-            result = Math.pow(num1, num2);
-
-            if (e.getSource() == powButton) {
-                result = Math.pow(num1, num2);
+            if (e.getSource() == decButton) {
+                if (!textfield.getText().contains(".") && textfield.getText().length() != 0)
+                    textfield.setText(textfield.getText().concat("."));
             }
-            textfield.setText(String.valueOf(result));
-            num1 = result;
-
-        }
-        if (e.getSource() == squareButton) {
-            num1 = Double.parseDouble(textfield.getText());
-            num1 *= num1;
-            textfield.setText(String.valueOf(num1));
+            if (e.getSource() == addButton) {
+                num1 = Double.parseDouble(textfield.getText());
+                operator = '+';
+                textfield.setText("");
+            }
+            if (e.getSource() == subButton) {
+                num1 = Double.parseDouble(textfield.getText());
+                operator = '-';
+                textfield.setText("");
+            }
+            if (e.getSource() == sqrtButton) {
+                num1 = Double.parseDouble(textfield.getText());
+                num1 = Math.sqrt(num1);
+                textfield.setText(String.valueOf(num1));
+            }
+            if (e.getSource() == mulButton) {
+                num1 = Double.parseDouble(textfield.getText());
+                operator = '*';
+                textfield.setText("");
+            }
+            if (e.getSource() == divButton) {
+                num1 = Double.parseDouble(textfield.getText());
+                operator = '/';
+                textfield.setText("");
+            }
+            if (e.getSource() == equButton) {
+                num2 = Double.parseDouble(textfield.getText());
+                switch (operator) {
+                    case '+' -> result = num1 + num2;
+                    case '-' -> result = num1 - num2;
+                    case '*' -> result = num1 * num2;
+                    case '/' -> result = num1 / num2;
+                    case '^' -> result = Math.pow(num1, num2);
+                }
+                textfield.setText(String.valueOf(result));
+                num1 = result;
+            }
+            if (e.getSource() == clrButton) {
+                textfield.setText("");
+            }
+            if (e.getSource() == delButton) {
+                String string = textfield.getText();
+                textfield.setText("");
+                for (int i = 0; i < string.length() - 1; i++) {
+                    textfield.setText(textfield.getText() + string.charAt(i));
+                }
+            }
+            if (e.getSource() == negButton) {
+                double temp = Double.parseDouble(textfield.getText());
+                temp *= -1;
+                textfield.setText(String.valueOf(temp));
+            }
+            if (e.getSource() == prctButton) {
+                num2 = Double.parseDouble(textfield.getText());
+                if (e.getSource() == prctButton) {
+                    switch (operator) {
+                        case '+' -> result = num1 + num2 * num1 / 100;
+                        case '-' -> result = num1 - num2 * num1 / 100;
+                        case '*' -> result = num1 * num2 * num1 / 100;
+                        case '/' -> result = num1 / num2 * num1 / 100;
+                    }
+                }
+                textfield.setText(String.valueOf(result));
+                num1 = result;
+            }
+            if (e.getSource() == powButton) {
+                num1 = Double.parseDouble(textfield.getText());
+                operator = '^';
+                textfield.setText("");
+            }
+            if (e.getSource() == squareButton) {
+                num1 = Double.parseDouble(textfield.getText());
+                num1 *= num1;
+                textfield.setText(String.valueOf(num1));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
@@ -233,6 +224,5 @@ public class Calculator implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 }
